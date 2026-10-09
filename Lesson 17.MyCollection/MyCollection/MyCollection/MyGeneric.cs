@@ -49,6 +49,66 @@ public class MyGeneric
         }
         return null; 
     }
+    public bool Delete(object item)
+    {
+        int index = -1;
+        for (int k = 0; k < _items.Length; k++)
+        {
+            var current = _items[k];
+            if (current is Dog && item is Dog && (Dog)current == (Dog)item)
+            {
+                index = k;
+                break;
+            }
+            else if (current is Cat && item is Cat && (Cat)current == (Cat)item)
+            {
+                index = k;
+                break;
+            }
+            else if (current != null && current.Equals(item))
+            {
+                index = k;
+                break;
+            }
+        }
+
+        if (index == -1) return false;
+
+        object[] temp = new object[_items.Length - 1];
+        for (int i = 0, j = 0; i < _items.Length; i++)
+        {
+            if (i == index) continue;
+            temp[j] = _items[i];
+            j++;
+        }
+        _items = temp;
+        return true;
+    }
+
+    // метод RemoveRange 
+    public void RemoveRange(int indexBegin, int indexEnd)
+    {
+        if (indexBegin < 0) indexBegin = 0;
+        if (indexEnd >= _items.Length) indexEnd = _items.Length - 1;
+
+        if (indexBegin > indexEnd || _items.Length == 0) return;
+
+        int removeCount = (indexEnd - indexBegin) + 1;
+        int newLength = _items.Length - removeCount;
+        if (newLength < 0) newLength = 0;
+
+        object[] temp = new object[newLength];
+        for (int i = 0, j = 0; i < _items.Length; i++)
+        {
+            if (i >= indexBegin && i <= indexEnd)
+            {
+                continue; 
+            }
+            temp[j] = _items[i];
+            j++;
+        }
+        _items = temp;
+    }
 
     public void ViewItems() //відображення колекції
     {

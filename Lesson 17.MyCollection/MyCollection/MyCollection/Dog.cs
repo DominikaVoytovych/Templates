@@ -22,4 +22,12 @@ public class Dog : Animal
     {
         return !(d1 == d2);
     }
+    public override bool Equals(object? obj)
+    {
+        return obj is Dog dog && this == dog;
+    }
+    public override string ToString()
+    {
+        return $"Собака -> " + base.ToString();
+    }
 }
